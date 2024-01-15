@@ -27,7 +27,7 @@ const FormOne = ({ formData, setFormData }: Props) => {
     }
   };
 
-  const handleClose = (e: React.SyntheticEvent | Event, reason?: string) => {
+  const handleClose = (_e: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
