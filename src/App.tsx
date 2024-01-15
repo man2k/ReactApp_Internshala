@@ -12,7 +12,7 @@ function App() {
   });
 
   return (
-    <main className="w-full h-screen mx-auto py-1 text-center bg-emerald-500 font-mono">
+    <main className="w-full h-screen mx-auto text-center bg-emerald-500 font-mono">
       <h1 className="text-6xl bg-orange-600">Welcome</h1>
       <h2 className="mt-10 text-3xl">Please fill up the form below</h2>
       <FormOne formData={formData} setFormData={setFormData} />
