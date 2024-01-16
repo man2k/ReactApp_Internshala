@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import DepartmentList from "../assets/Departmentlist.json";
+import DepartmentList from "../assets/DepartmentList.json";
 import CheckboxList from "./CheckboxList";
 
 const SecondComponent: React.FC = () => {
