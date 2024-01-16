@@ -17,14 +17,14 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
   const [expand, setExpand] = useState<checkedToggle>({});
   const [checked, setChecked] = useState<checkedToggle>({});
 
-  const handleToggleExpand = (department: string) => {
+  const toggleExpand = (department: string) => {
     setExpand((prev: checkedToggle) => ({
       ...prev,
       [department]: !prev[department],
     }));
   };
 
-  const handleDepToggle = (
+  const toggleDepartment = (
     data: dataStr,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -35,23 +35,15 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
       }));
     }
 
-    data.sub_departments.forEach((subdep) =>
-      handleSubDepToggle(subdep, e.target.checked)
+    data.sub_departments.forEach((subDep) =>
+      toggleSubDepartment(subDep, e.target.checked)
     );
   };
 
-  const handleSubDepToggle = (department: string, passVal?: boolean) => {
-    if (passVal === true) {
-      // toggle through parent
-      return setChecked((prev: checkedToggle) => ({
-        ...prev,
-        [department]: true,
-      }));
-    }
-
+  const toggleSubDepartment = (department: string, passVal?: boolean) => {
     setChecked((prev: checkedToggle) => ({
       ...prev,
-      [department]: !prev[department],
+      [department]: passVal === true ? true : !prev[department],
     }));
   };
 
@@ -61,7 +53,7 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
         {data.sub_departments.length > 0 ? (
           <button
             className="w-max"
-            onClick={() => handleToggleExpand(data.department)}
+            onClick={() => toggleExpand(data.department)}
           >
             {expand[data.department] ? (
               <ArrowDropUpRoundedIcon />
@@ -85,24 +77,24 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
             checked[data.department] ||
             false
           }
-          onChange={(e) => handleDepToggle(data, e)}
+          onChange={(e) => toggleDepartment(data, e)}
         />
         <div className="uppercase">{data.department.replace("_", " ")}</div>
       </div>
       <div className="flex flex-col">
         {data.sub_departments.length > 0 &&
           expand[data.department] &&
-          data.sub_departments.map((subdep) => (
-            <div className="flex flex-row ml-10" key={subdep}>
+          data.sub_departments.map((subDep) => (
+            <div className="flex flex-row ml-10" key={subDep}>
               <input
                 type="checkbox"
-                checked={checked[subdep] || false}
+                checked={checked[subDep] || false}
                 onChange={() => {
-                  handleSubDepToggle(subdep);
+                  toggleSubDepartment(subDep);
                 }}
               />
               <li className="ml-2 text-base capitalize">
-                {subdep.replace(/_/g, " ")}
+                {subDep.replace(/_/g, " ")}
               </li>
             </div>
           ))}

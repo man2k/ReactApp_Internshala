@@ -23,11 +23,9 @@ const Table: React.FC = () => {
 
   return (
     <div className="w-full mx-auto p-10 bg-emerald-500">
-      <label>
-        <h1 className="text-4xl font-mono mb-2">POSTS</h1>
-      </label>
+      <h1 className="text-4xl font-mono mb-2">POSTS</h1>
       <div className="bg-violet-400 h-80">
-        <DataGrid rows={data} columns={columns} className="" />
+        <DataGrid rows={data} columns={columns} />
       </div>
     </div>
   );

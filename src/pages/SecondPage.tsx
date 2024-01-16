@@ -5,6 +5,7 @@ import SecondComponent from "../components/SecondComponent";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+
 const SecondPage: React.FC = () => {
   const navigate = useNavigate();
 

@@ -16,18 +16,16 @@ const FirstComponent = ({ formData, setFormData }: Props) => {
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.id === "phoneNumber") {
-      const phonef = e.target.value.replace(/[^0-9]/g, "");
-      setFormData({ ...formData, [e.target.id]: phonef });
-    } else {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
-    }
+    const { id, value } = e.target;
+    const data = id === "phoneNumber" ? value.replace(/[^0-9]/g, "") : value;
+    setFormData({ ...formData, [id]: data });
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.phoneNumber) {
-      sessionStorage.setItem("userData", JSON.stringify(formData));
+    const { name, email, phoneNumber } = formData;
+    if (name && email && phoneNumber) {
+      localStorage.setItem("userData", JSON.stringify(formData));
       navigate("/second");
     } else {
       setOpen(true);
