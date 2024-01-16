@@ -29,7 +29,7 @@ const SecondPage: React.FC = () => {
   };
   return (
     <main className="w-full h-screen mx-auto bg-emerald-500 font-mono overflow-scroll flex flex-col">
-      {sessionStorage.getItem("userData") ? (
+      {localStorage.getItem("userData") ? (
         <>
           <Table />
           <SecondComponent />
