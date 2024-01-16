@@ -1,5 +1,10 @@
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
+
+interface checkedToggle {
+  [key: string]: boolean;
+}
 
 interface dataStr {
   department: string;
@@ -9,11 +14,11 @@ interface dataStr {
 type Props = { data: dataStr };
 
 const CheckboxList: React.FC<Props> = ({ data }: Props) => {
-  const [expand, setExpand] = useState<any>({});
-  const [checked, setChecked] = useState<any>({});
+  const [expand, setExpand] = useState<checkedToggle>({});
+  const [checked, setChecked] = useState<checkedToggle>({});
 
   const handleToggleExpand = (department: string) => {
-    setExpand((prev: any) => ({
+    setExpand((prev: checkedToggle) => ({
       ...prev,
       [department]: !prev[department],
     }));
@@ -24,13 +29,10 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (data.sub_departments.length === 0) {
-      setChecked((prev: any) => {
-        console.log(prev[data.department]);
-        return {
-          ...prev,
-          [data.department]: e.target.checked,
-        };
-      });
+      setChecked((prev: checkedToggle) => ({
+        ...prev,
+        [data.department]: e.target.checked,
+      }));
     }
 
     data.sub_departments.forEach((subdep) =>
@@ -41,13 +43,16 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
   const handleSubDepToggle = (department: string, passVal?: boolean) => {
     if (passVal === true) {
       // toggle through parent
-      return setChecked((prev: any) => ({
+      return setChecked((prev: checkedToggle) => ({
         ...prev,
         [department]: true,
       }));
     }
 
-    setChecked((prev: any) => ({ ...prev, [department]: !prev[department] }));
+    setChecked((prev: checkedToggle) => ({
+      ...prev,
+      [department]: !prev[department],
+    }));
   };
 
   return (
@@ -58,7 +63,11 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
             className="w-max"
             onClick={() => handleToggleExpand(data.department)}
           >
-            <ArrowDropDownRoundedIcon />
+            {expand[data.department] ? (
+              <ArrowDropUpRoundedIcon />
+            ) : (
+              <ArrowDropDownRoundedIcon />
+            )}
           </button>
         ) : (
           <div className="ml-6"></div>
@@ -81,7 +90,8 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
         <div className="uppercase">{data.department.replace("_", " ")}</div>
       </div>
       <div className="flex flex-col">
-        {data.sub_departments.length > 0 && expand[data.department] ? (
+        {data.sub_departments.length > 0 &&
+          expand[data.department] &&
           data.sub_departments.map((subdep) => (
             <div className="flex flex-row ml-10" key={subdep}>
               <input
@@ -95,10 +105,7 @@ const CheckboxList: React.FC<Props> = ({ data }: Props) => {
                 {subdep.replace(/_/g, " ")}
               </li>
             </div>
-          ))
-        ) : (
-          <></>
-        )}
+          ))}
       </div>
     </div>
   );

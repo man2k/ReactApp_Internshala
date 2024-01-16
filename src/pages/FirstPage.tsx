@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormOne from "../components/FormOne";
+import FormOne from "../components/FirstComponent";
 import { UserData } from "../types/types";
 
 function FirstPage() {

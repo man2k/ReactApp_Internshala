@@ -11,7 +11,7 @@ type Props = {
   setFormData: React.Dispatch<React.SetStateAction<UserData>>;
 };
 
-const FormOne = ({ formData, setFormData }: Props) => {
+const FirstComponent = ({ formData, setFormData }: Props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -118,4 +118,4 @@ const FormOne = ({ formData, setFormData }: Props) => {
   );
 };
 
-export default FormOne;
+export default FirstComponent;
