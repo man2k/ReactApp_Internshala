@@ -1,0 +1,31 @@
+[
+	{
+  	"department": "customer_service",
+  	"sub_departments": [
+    	"support",
+    	"customer_success"
+  	]
+	},
+	{
+  	"department": "design",
+  	"sub_departments": [
+    	"graphic_design",
+    	"product_design",
+    	"web_design",
+		"product_management"
+  	]
+	},
+	{
+  	"department": "agriculture",
+  	"sub_departments": [
+  	]
+	},
+	{
+  	"department": "sales",
+  	"sub_departments": [
+    	"sales_manager",
+		"advertisement_manager",
+		"social_media_influencer"
+  	]
+	}
+]

@@ -1,27 +1,34 @@
 import { Button, IconButton } from "@mui/material";
-import userData from "../types/formData";
+import { UserData } from "../types/types";
 import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 type Props = {
-  formData: userData;
-  setFormData: React.Dispatch<React.SetStateAction<userData>>;
+  formData: UserData;
+  setFormData: React.Dispatch<React.SetStateAction<UserData>>;
 };
 
 const FormOne = ({ formData, setFormData }: Props) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    if (e.target.id === "phoneNumber") {
+      const phonef = e.target.value.replace(/[^0-9]/g, "");
+      setFormData({ ...formData, [e.target.id]: phonef });
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.phoneNumber) {
-      localStorage.setItem("userData", JSON.stringify(formData));
+      sessionStorage.setItem("userData", JSON.stringify(formData));
+      navigate("/second");
     } else {
       setOpen(true);
     }
@@ -48,8 +55,8 @@ const FormOne = ({ formData, setFormData }: Props) => {
   );
   return (
     <div className="flex flex-col justify-center items-center mt-20">
-      <form className="flex flex-col items-start bg-emerald-400 rounded-lg p-10 pt-2 w-max gap-2 shadow-lg">
-        <label className="w-full flex text-3xl font-serif">
+      <form className="flex flex-col items-start bg-emerald-400 rounded-lg p-12 pt-5 w-max gap-2 shadow-lg">
+        <label className="w-full flex text-4xl font-sans mb-2 justify-center">
           <h1>Your Details</h1>
         </label>
         <div className="flex flex-row w-full">
@@ -58,6 +65,7 @@ const FormOne = ({ formData, setFormData }: Props) => {
             <TextField
               id="name"
               required
+              type="text"
               variant="standard"
               value={formData.name}
               size="small"
@@ -71,6 +79,7 @@ const FormOne = ({ formData, setFormData }: Props) => {
             <TextField
               id="phoneNumber"
               required
+              type="tel"
               variant="standard"
               size="small"
               value={formData.phoneNumber}
@@ -84,6 +93,7 @@ const FormOne = ({ formData, setFormData }: Props) => {
             <TextField
               id="email"
               required
+              type="email"
               variant="standard"
               size="small"
               value={formData.email}
@@ -91,19 +101,19 @@ const FormOne = ({ formData, setFormData }: Props) => {
             />
           </div>
         </div>
+        <div className="mt-4 w-full">
+          <Button variant="contained" type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          <Snackbar
+            open={open}
+            autoHideDuration={5000}
+            onClose={handleClose}
+            message="Some inputs are missing."
+            action={action}
+          />
+        </div>
       </form>
-      <div className="mt-2 shadow-lg">
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Snackbar
-          open={open}
-          autoHideDuration={5000}
-          onClose={handleClose}
-          message="Some inputs are missing."
-          action={action}
-        />
-      </div>
     </div>
   );
 };
