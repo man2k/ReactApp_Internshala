@@ -10,7 +10,7 @@ const SecondPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (sessionStorage.getItem("userData") === null) {
+    if (localStorage.getItem("userData") === null) {
       handleClickOpen();
     }
   }, []);
