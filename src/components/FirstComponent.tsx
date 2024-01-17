@@ -1,10 +1,10 @@
-import { Button, IconButton } from "@mui/material";
 import { UserData } from "../types/types";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Button, IconButton } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 type Props = {
   formData: UserData;
@@ -12,22 +12,35 @@ type Props = {
 };
 
 const FirstComponent = ({ formData, setFormData }: Props) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("Some inputs are missing.");
+
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { id, value } = e.target;
-    const data = id === "phoneNumber" ? value.replace(/[^0-9]/g, "") : value;
-    setFormData({ ...formData, [id]: data });
+    const finalData =
+      id === "phoneNumber" ? value.replace(/[^0-9]/g, "") : value;
+    setFormData({ ...formData, [id]: finalData });
+  };
+
+  const validateEmail = (email: string) => {
+    let reg = /\S+@\S+\.\S+/;
+    return reg.test(email);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { name, email, phoneNumber } = formData;
     if (name && email && phoneNumber) {
+      if (!validateEmail(email)) {
+        setErrMsg("Email is invalid.");
+        return setOpen(true);
+      }
       localStorage.setItem("userData", JSON.stringify(formData));
       navigate("/second");
     } else {
+      setErrMsg("Some inputs are missing.");
       setOpen(true);
     }
   };
@@ -107,7 +120,7 @@ const FirstComponent = ({ formData, setFormData }: Props) => {
             open={open}
             autoHideDuration={5000}
             onClose={handleClose}
-            message="Some inputs are missing."
+            message={errMsg}
             action={action}
           />
         </div>
