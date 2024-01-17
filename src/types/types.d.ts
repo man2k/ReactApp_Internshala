@@ -10,3 +10,12 @@ export interface Post {
   title: string;
   body: string;
 }
+
+export interface checkedToggle {
+  [key: string]: boolean;
+}
+
+export interface dataStr {
+  department: string;
+  sub_departments: string[];
+}

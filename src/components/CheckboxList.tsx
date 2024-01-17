@@ -1,15 +1,7 @@
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import React, { useState } from "react";
-
-interface checkedToggle {
-  [key: string]: boolean;
-}
-
-interface dataStr {
-  department: string;
-  sub_departments: string[];
-}
+import { checkedToggle, dataStr } from "../types/types";
 
 type Props = { data: dataStr };
 
